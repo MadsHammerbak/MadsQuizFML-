@@ -1,5 +1,5 @@
 const SDK = {
-  serverURL: "http://dis-bookstore.herokuapp.com/api",
+  serverURL: "http://localhost:8080/api",
   request: (options, cb) => {
 
     let headers = {};
@@ -24,7 +24,7 @@ const SDK = {
       }
     });
 
-  },
+  },/*
   Book: {
     addToBasket: (book) => {
       let basket = SDK.Storage.load("basket");
@@ -51,7 +51,7 @@ const SDK = {
 
       SDK.Storage.persist("basket", basket);
     },
-    findAll: (cb) => {
+     findAll: (cb) => {
       SDK.request({
         method: "GET",
         url: "/books",
@@ -107,23 +107,23 @@ const SDK = {
       SDK.Storage.remove("userId");
       SDK.Storage.remove("user");
       window.location.href = "index.html";
-    },
-    login: (email, password, cb) => {
+    },*/
+    login: (username, password, cb) => {
       SDK.request({
         data: {
-          email: email,
+          username: username,
           password: password
         },
-        url: "/users/login?include=user",
+        url: "/user/login/",
         method: "POST"
       }, (err, data) => {
 
         //On login-error
         if (err) return cb(err);
 
-        SDK.Storage.persist("tokenId", data.id);
+        //SDK.Storage.persist("tokenId", data.id);
         SDK.Storage.persist("userId", data.userId);
-        SDK.Storage.persist("user", data.user);
+        SDK.Storage.persist("username", data.username);
 
         cb(null, data);
 
@@ -147,22 +147,23 @@ const SDK = {
       });
     }
   },
+/*
   Storage: {
-    prefix: "BookStoreSDK",
-    persist: (key, value) => {
-      window.localStorage.setItem(SDK.Storage.prefix + key, (typeof value === 'object') ? JSON.stringify(value) : value)
-    },
-    load: (key) => {
-      const val = window.localStorage.getItem(SDK.Storage.prefix + key);
-      try {
-        return JSON.parse(val);
+      prefix: "BookStoreSDK",
+      persist: (key, value) => {
+          window.localStorage.setItem(SDK.Storage.prefix + key, (typeof value === 'object') ? JSON.stringify(value): value)
+      },
+      load: (key) => {
+          const val = window.localStorage.getItem(SDK.Storage.prefix + key);
+          try {
+          return JSON.parse(val);
       }
       catch (e) {
-        return val;
-      }
-    },
-    remove: (key) => {
-      window.localStorage.removeItem(SDK.Storage.prefix + key);
-    }
+      return val;
+  }
+},
+      remove: (key) => {
+        window.localStorage.removeItem(SDK.Storage.prefix + key);
+  }
   }
 };
