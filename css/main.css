@@ -21,3 +21,15 @@ dd {
 .book-container .price-label p {
     margin: 4px 0 0 0;
 }
+.form-row input {
+    width: 20%;
+}
+.footer {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 1rem;
+
+    text-align: center;
+}
