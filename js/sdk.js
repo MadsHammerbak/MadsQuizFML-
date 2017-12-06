@@ -97,7 +97,7 @@ const SDK = {
     },
     User: {
         findAll: (cb) => {
-            SDK.request({method: "GET", url: "/staffs"}, cb);
+            SDK.request({method: "GET", url: "/user"}, cb);
         },
 
         create: (username, password, firstName, lastName, cb) => {
