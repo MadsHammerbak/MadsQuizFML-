@@ -49,10 +49,26 @@
     </div>
 </footer>
 
+
 <script src="lib/js/jquery-3.2.1.js"></script>
 <script src="lib/js/bootstrap.js"></script>
 <script src="js/sdk.js"></script>
 <script src="js/users.js"></script>
+    <script>
 
+    let user = SDK.Storage.load("username")
+
+    if (user == null ) {
+        try {
+            //stop most browsers loading
+            window.stop();
+        }
+        catch (e) {
+            //IE stop loading content
+            document.execCommand('Stop');
+        }
+        document.location.replace("login.html");
+    }
+    </script>
 </body>
 </html>

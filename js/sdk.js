@@ -130,7 +130,7 @@ const SDK = {
         },
         logOut: () => {
             SDK.Storage.remove("userId");
-            SDK.Storage.remove("user");
+            SDK.Storage.remove("username");
             window.location.href = "index.html";
         },
         login: (username, password, cb) => {
@@ -146,7 +146,7 @@ const SDK = {
                 //On login-error
                 if (err) return cb(err);
 
-                //SDK.Storage.persist("tokenId", data.id);
+                data = JSON.parse(data);
                 SDK.Storage.persist("userId", data.userId);
                 SDK.Storage.persist("username", data.username);
 

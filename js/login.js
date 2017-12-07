@@ -16,7 +16,7 @@ $(document).ready(() => {
       else if (err){
         console.log("Bad stuff happened")
       } else {
-        window.location.href = "../users.html";
+        window.location.href = "users.html";
       }
     });
 
