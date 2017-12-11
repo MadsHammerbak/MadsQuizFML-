@@ -2,7 +2,7 @@ $(document).ready(() => {
 
   SDK.User.loadNav();
 
-    $(".Opret").hide();
+    $(".OpretBruger").hide();
 
   $("#login-button").click(() => {
 
@@ -16,7 +16,7 @@ $(document).ready(() => {
       else if (err){
         console.log("Bad stuff happened")
       } else {
-        window.location.href = "users.html";
+        window.location.href = "adminUser.html";
       }
     });
 
@@ -27,7 +27,7 @@ $(document).ready(() => {
 
   $("#opret-bruger").click(() => {
 
-      $(".Opret").toggle();
+      $(".OpretBruger").toggle();
 
   });
 
@@ -47,7 +47,7 @@ $(document).ready(() => {
           else if (err){
               console.log("Bad stuff happened")
           } else {
-              window.location.href = "login.html";
+              window.location.href = "adminUser.html";
           }
 
     });

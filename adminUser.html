@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <link rel="stylesheet" href="lib/css/bootstrap.css">
+    <link rel="stylesheet" href="css/main.css">
+
+    <meta charset="UTF-8">
+    <title>Quiz FML </title>
+
+</head>
+<body>
+
+<div class="container">
+
+
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="jumbotron">
+                <h1 class="display-3">Menu</h1>
+                <p class="lead"></p>
+                <hr class="my-4">
+                <p>Herfra kan du starte din quiz</p>
+                <p class="lead">
+                    <a class="btn btn-primary btn-lg" href="checkout.html" role="button">Videre til quiz</a>
+                    <a class="btn btn-primary btn-lg" href="createQuiz.html" role="button">Opret quiz </a>
+                    <a class="btn btn-primary btn-lg" id="visOpretAdmin" role="button">Opret Admin bruger </a>
+                    <a class="btn btn-primary btn-lg" href="login.html" role="button">Slet brugerer </a>
+                </p>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="OpretAdmin">
+        <div class="col-lg-6">
+            <div class="page-header">
+                <h1>Opret bruger</h1>
+                <div id="sign-up"></div>
+            </div>
+
+            <div class="form-group">
+
+                <label class="control-label" for="signupUsername">Username</label>
+                <input type="text" class="form-control" id="signupUsername" placeholder="Username">
+
+            </div>
+
+            <div class="form-group">
+
+                <label class="control-label" for="signupPassword">Password</label>
+                <input type="password" class="form-control" id="signupPassword" placeholder="Password">
+
+            </div>
+
+            <div class="form-group">
+
+                <label class="control-label" for="signupFirstname">Firstname</label>
+                <input type="text" class="form-control" id="signupFirstname" placeholder="Firstname">
+
+            </div>
+
+            <div class="form-group">
+
+                <label class="control-label" for="signupLastname">Lastname</label>
+                <input type="text" class="form-control" id="signupLastname" placeholder="Lastname">
+
+            </div>
+
+            <button style="margin-left: 20px" class="btn btn-default" id="opret-admin">Opret</button>
+        </div>
+    </div>
+</div>
+
+<footer class="footer">
+    <div class="container">
+        <p class="text-muted">2017 © All rights reserved - Quiz FML</p>
+    </div>
+</footer>
+
+<script src="lib/js/jquery-3.2.1.js"></script>
+<script src="lib/js/bootstrap.js"></script>
+<script src="js/sdk.js"></script>
+<script src="js/adminMenu.js"></script>
+
+
+</body>
+</html>
