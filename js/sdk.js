@@ -113,6 +113,7 @@ const SDK = {
                 },
 
 
+
             },(err, data) => {
 
                 //On login-error
@@ -121,16 +122,52 @@ const SDK = {
                 //SDK.Storage.persist("tokenId", data.id);
                 SDK.Storage.persist("userId", data.userId);
                 SDK.Storage.persist("username", data.username);
+                SDK.Storage.persist("userType", data.type);
 
                 cb(null, data);
             });
         },
+        createAdmin: (username, password, firstName, lastName, cb) => {
+            SDK.request({
+                method: "POST",
+                url: "/user/",
+                data: {
+                    username: username,
+                    password: password,
+                    firstName: firstName,
+                    lastName: lastName,
+                    type: 2
+                },
+
+            },(err, data) => {
+
+                //On login-error
+                if (err) return cb(err);
+
+                //SDK.Storage.persist("tokenId", data.id);
+                SDK.Storage.persist("userId", data.userId);
+                SDK.Storage.persist("username", data.username);
+                SDK.Storage.persist("userType", data.type);
+
+                cb(null, data);
+            });
+        },
+
+
         current: () => {
-            return SDK.Storage.load("user");
+            return {
+
+               userId: SDK.Storage.load("userId"),
+               username: SDK.Storage.load("username"),
+               type: SDK.Storage.load("userType")
+
+        }
+
         },
         logOut: () => {
             SDK.Storage.remove("userId");
             SDK.Storage.remove("username");
+            SDK.Storage.remove("userType");
             window.location.href = "index.html";
         },
         login: (username, password, cb) => {
@@ -149,6 +186,7 @@ const SDK = {
                 data = JSON.parse(data);
                 SDK.Storage.persist("userId", data.userId);
                 SDK.Storage.persist("username", data.username);
+                SDK.Storage.persist("userType", data.type);
 
                 cb(null, data);
 
@@ -157,10 +195,13 @@ const SDK = {
         loadNav: (cb) => {
             $("#nav-container").load("nav.html", () => {
                 const currentUser = SDK.User.current();
-                if (currentUser) {
+                if (currentUser.type === 2) {
                     $(".navbar-right").html(`
-            <li><a href="my-page.html">Your orders</a></li>
+            <li><a href="createQuiz.html" >Create quiz</a></li>
+            <li><a href="users.html" >Slet bruger</a></li>
+            <li><a href="adminUser.html">Opret Admin</a></li>
             <li><a href="index.html" id="logout-link">Logout</a></li>
+
           `);
                 } else {
                     $(".navbar-right").html(`
@@ -174,7 +215,7 @@ const SDK = {
     },
 
     Storage: {
-        prefix: "BookStoreSDK",
+        prefix: "Quiz",
         persist: (key, value) => {
             window.localStorage.setItem(SDK.Storage.prefix + key, (typeof value === 'object') ? JSON.stringify(value) : value)
         },
@@ -191,5 +232,26 @@ const SDK = {
             window.localStorage.removeItem(SDK.Storage.prefix + key);
         }
 
-    }
-}
+    },
+
+
+    restrictAccess: () => {
+        let user = SDK.Storage.load("username");
+
+        if (user == null ) {
+            try {
+                //stop most browsers loading
+                window.stop();
+            }
+            catch (e) {
+                //IE stop loading content
+                document.execCommand('Stop');
+            }
+            document.location.replace("login.html");
+        }
+
+},
+
+
+
+};

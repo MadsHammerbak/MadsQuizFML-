@@ -47,7 +47,8 @@ $(document).ready(() => {
           else if (err){
               console.log("Bad stuff happened")
           } else {
-              window.location.href = "adminUser.html";
+              alert("Bruger oprettet");
+              window.location.href = "login.html";
           }
 
     });

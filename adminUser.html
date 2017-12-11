@@ -25,9 +25,13 @@
                 <p>Herfra kan du starte din quiz</p>
                 <p class="lead">
                     <a class="btn btn-primary btn-lg" href="checkout.html" role="button">Videre til quiz</a>
-                    <a class="btn btn-primary btn-lg" href="createQuiz.html" role="button">Opret quiz </a>
-                    <a class="btn btn-primary btn-lg" id="visOpretAdmin" role="button">Opret Admin bruger </a>
-                    <a class="btn btn-primary btn-lg" href="login.html" role="button">Slet brugerer </a>
+
+                <div class="adminMenu">
+                <a class="btn btn-primary btn-lg"  href="createQuiz.html" role="button">Opret quiz </a>
+                <a class="btn btn-primary btn-lg"  id="visOpretAdmin" role="button">Opret Admin bruger </a>
+                <a class="btn btn-primary btn-lg"  href="users.html"  role="button">Slet brugerer </a>
+                </div>
+
                 </p>
 
             </div>
@@ -87,6 +91,9 @@
 <script src="lib/js/bootstrap.js"></script>
 <script src="js/sdk.js"></script>
 <script src="js/adminMenu.js"></script>
+<script>
+    SDK.restrictAccess();
+</script>
 
 
 </body>
