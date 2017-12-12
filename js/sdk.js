@@ -25,32 +25,24 @@ const SDK = {
         });
 
     },
-    Book: {
-        addToBasket: (book) => {
-            let basket = SDK.Storage.load("basket");
+    Courses: {
 
-            //Has anything been added to the basket before?
-            if (!basket) {
-                return SDK.Storage.persist("basket", [{
-                    count: 1,
-                    book: book
-                }]);
-            }
+        getCourses: (cb) => {
+            SDK.request({
+                method: "GET",
+                url: "/courses"
+            }, (err, data) => {
 
-            //Does the book already exist?
-            let foundBook = basket.find(b => b.book.id === book.id);
-            if (foundBook) {
-                let i = basket.indexOf(foundBook);
-                basket[i].count++;
-            } else {
-                basket.push({
-                    count: 1,
-                    book: book
-                });
-            }
+                if (err) return cb(err);
 
-            SDK.Storage.persist("basket", basket);
+                data = JSON.parse(data);
+
+                cb(null, data);
+            });
         },
+
+
+
         findAll: (cb) => {
             SDK.request({
                 method: "GET",

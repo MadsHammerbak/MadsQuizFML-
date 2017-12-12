@@ -2,18 +2,56 @@ $(document).ready(() => {
 
   SDK.User.loadNav();
 
-  $("#quiz").hide();
+  $(".courseGroup").hide();
 
-  $(".course").click(function() {
-    $("#quiz").show();
-    $this = $(this);
-    var courseName = $this.text();
-    $("#courseName").text(courseName);
-    $parent = $this.parent();
-    $quiz = $parent.siblings("#quiz");
-    nameQuiz($quiz, courseName);
+  SDK.Courses.getCourses((err, courses) => {
+      console.log(courses)
+      courses.forEach(function (course) {
+          $("#courseDiv").append("<div class='col-md-3' id=" + course.courseId + "></div>");
+          $("#" + course.courseId).append("<div id='courseBtn" + course.courseId + "' class='btn btn-default'>" + course.courseTitel + "</div>")
+          $("#courseBtn" + course.courseId).click(function () {
+            $("#course" + course.courseId + "Name").text(course.courseTitel);
+            $(".courseGroup").hide();
+            $("#course" + course.courseId).show();
+            $("#course" + course.courseId).append("<div class='btn btn-primary' id='addQuestion" + course.courseId + "'>Add Choices</div>")
+
+
+
+          });
+
   });
 
+/*
+  $("#C1").hide();
+  $("#C2").hide();
+  $("#C3").hide();
+  $("#C4").hide();
+  $("#courseName").hide();
+
+  $(".course").click(function() {
+      $this = $(this);
+      var courseName = $this.text();
+      var courseId = $this.attr("id");
+
+      $("#courseName").text(courseName);
+      console.log(courseId);
+
+*/
+
+
+
+
+    /* $("#quiz").show();
+    $this = $(this);
+    $("#courseName").text(courseName);
+    var courseName = $this.text();
+    $parent = $this.parent();
+    $quiz = $parent.siblings("#quiz");
+    nameQuiz($quiz, courseName);*/
+  });
+
+
+  /*
   function nameQuiz(elem, courseName) {
 
     elem.append("<h1 id='courseName'>" + courseName + "</h1>");
@@ -40,6 +78,7 @@ $(document).ready(() => {
     elem.append("<input type='text' class='form-control' id='question3' placeholder='Answer 3'>");
     elem.append("<input type='text' class='form-control' id='question4' placeholder='Answer 4'>");
     elem.append(addQuestion);
-  }));
+  }));*/
+
 });
 
