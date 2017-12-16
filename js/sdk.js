@@ -42,7 +42,6 @@ const SDK = {
         },
 
 
-
         findAll: (cb) => {
             SDK.request({
                 method: "GET",
@@ -54,39 +53,91 @@ const SDK = {
                 }
             }, cb);
         },
-        create: (data, cb) => {
+    },
+    Quiz: {
+        create: (quiz, cb) => {
             SDK.request({
                 method: "POST",
-                url: "/books",
-                data: data,
-                headers: {authorization: SDK.Storage.load("tokenId")}
-            }, cb);
-        }
-    },
-    Author: {
-        findAll: (cb) => {
-            SDK.request({method: "GET", url: "/authors"}, cb);
-        }
-    },
-    Order: {
-        create: (data, cb) => {
-            SDK.request({
-                method: "POST",
-                url: "/orders",
-                data: data,
-                headers: {authorization: SDK.Storage.load("tokenId")}
-            }, cb);
+                url: "/quiz",
+                data: {
+                    courseId: quiz.courseId,
+                    quizTitle: quiz.quizTitle
+                },
+            },
+                (err, data) => {
+
+                if (err) return cb(err);
+
+                data = JSON.parse(data);
+                SDK.Storage.persist("courseId", data.courseId);
+                SDK.Storage.persist("quizTitle", data.quizTitle);
+                SDK.Storage.persist("quizId", data.quizId);
+
+                cb(null, data);
+            });
         },
-        findMine: (cb) => {
+        findAll: (id, cb) => {
             SDK.request({
                 method: "GET",
-                url: "/orders/" + SDK.User.current().id + "/allorders",
-                headers: {
-                    authorization: SDK.Storage.load("tokenId")
-                }
-            }, cb);
+                url: "/quiz/"+id,
+            },(err, data) => {
+
+                //On login-error
+                if (err) return cb(err);
+
+                data = JSON.parse(data);
+
+
+                cb(null, data);
+
+            });
         }
     },
+    Question: {
+        create: (question, cb) => {
+            SDK.request({
+                    method: "POST",
+                    url: "/question",
+                    data: {
+                        quizId: question.quizId,
+                        questionTitle: question.questionTitle
+                    },
+                },
+                (err, data) => {
+
+                    //On login-error
+                    if (err) return cb(err);
+
+
+                    cb(null, data);
+                });
+        },
+
+    },
+    Choice: {
+        create: (choice, cb) => {
+            SDK.request({
+                    method: "POST",
+                    url: "/choice",
+                    data: {
+                        questionId: choice.questionId ,
+                        choiceTitle: choice.choiceTitle,
+                        correctAnswer: choice.correctAnwwer
+                    },
+                },
+                (err, data) => {
+
+                    //On login-error
+                    if (err) return cb(err);
+
+
+                    cb(null, data);
+                });
+        },
+
+    },
+
+
     User: {
         findAll: (cb) => {
             SDK.request({method: "GET", url: "/user"}, cb);
@@ -104,14 +155,12 @@ const SDK = {
                     type: 1
                 },
 
-
-
             },(err, data) => {
 
                 //On login-error
                 if (err) return cb(err);
 
-                //SDK.Storage.persist("tokenId", data.id);
+
                 SDK.Storage.persist("userId", data.userId);
                 SDK.Storage.persist("username", data.username);
                 SDK.Storage.persist("userType", data.type);
@@ -226,7 +275,10 @@ const SDK = {
 
     },
 
-
+    /**
+     * Lavet med udgangspunkt i denne.
+     * https://stackoverflow.com/questions/33137525/redirect-user-if-not-logged-in-in-html-with-jquery
+     */
     restrictAccess: () => {
         let user = SDK.Storage.load("username");
 
