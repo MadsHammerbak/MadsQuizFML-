@@ -42,17 +42,6 @@ const SDK = {
         },
 
 
-        findAll: (cb) => {
-            SDK.request({
-                method: "GET",
-                url: "/books",
-                headers: {
-                    filter: {
-                        include: ["authors"]
-                    }
-                }
-            }, cb);
-        },
     },
     Quiz: {
         create: (quiz, cb) => {
@@ -203,7 +192,22 @@ const SDK = {
                username: SDK.Storage.load("username"),
                type: SDK.Storage.load("userType")
 
-        }
+        }},
+
+        delete: (id, cb) =>{
+            SDK.request({
+                method: "DELETE",
+                url: "/user/" + id,
+                },
+
+                (err, data) => {
+
+                    if (err) return cb(err);
+
+
+                    cb(null, data);
+                });
+
 
         },
         logOut: () => {
@@ -240,7 +244,7 @@ const SDK = {
                 if (currentUser.type === 2) {
                     $(".navbar-right").html(`
             <li><a href="createQuiz.html" >Create quiz</a></li>
-            <li><a href="users.html" >Slet bruger</a></li>
+            <li><a href="users.html" >Bruger oversigt</a></li>
             <li><a href="adminUser.html">Opret Admin</a></li>
             <li><a href="index.html" id="logout-link">Logout</a></li>
 
