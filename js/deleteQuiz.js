@@ -20,7 +20,7 @@ $(document).ready(() => {
                     quiz.forEach((quiz) => {
 
                         $quizesTbody.append(`<tr data-id="${quiz.quizId}"> <td>${quiz.quizId}</td><td>${quiz.quizTitle}</td> 
-                        <td><div class="btn btn-primary-ld" role="group" id="deleteQuiz">Slet quiz</div></td>`);
+                        <td><div class="btn btn-primary-ld" role="group" id="${quiz.quizId}">Slet quiz</div></td>`);
 
 
 
