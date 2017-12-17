@@ -68,16 +68,16 @@ const SDK = {
         findAll: (id, cb) => {
             SDK.request({
                 method: "GET",
-                url: "/quiz/"+id,
-            },(err, data) => {
-
-                //On login-error
-                if (err) return cb(err);
-
-                data = JSON.parse(data);
+                url: ("/quiz/" + id),
+                },
+                    (err, data) => {
 
 
-                cb(null, data);
+                    if (err) return cb(err);
+
+                    data = JSON.parse(data);
+
+                    cb(null, data);
 
             });
         }
@@ -243,9 +243,10 @@ const SDK = {
                 const currentUser = SDK.User.current();
                 if (currentUser.type === 2) {
                     $(".navbar-right").html(`
-            <li><a href="createQuiz.html" >Create quiz</a></li>
+            <li><a href="createQuiz.html" >Opret quiz</a></li>
             <li><a href="users.html" >Bruger oversigt</a></li>
             <li><a href="adminUser.html">Opret Admin</a></li>
+            <li><a href="deleteQuiz.html">Slet Quiz</a></li>
             <li><a href="index.html" id="logout-link">Logout</a></li>
 
           `);
