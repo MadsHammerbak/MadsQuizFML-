@@ -107,7 +107,8 @@ const SDK = {
 
                     //On login-error
                     if (err) return cb(err);
-
+                    data = JSON.parse(data);
+                    SDK.Storage.persist("questionId", data.questionId);
 
                     cb(null, data);
                 });
@@ -122,7 +123,7 @@ const SDK = {
                     data: {
                         questionId: choice.questionId ,
                         choiceTitle: choice.choiceTitle,
-                        correctAnswer: choice.correctAnwwer
+                        answer: choice.answer
                     },
                 },
                 (err, data) => {
