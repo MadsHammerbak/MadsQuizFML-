@@ -41,36 +41,46 @@ const SDK = {
             });
         },
 
-
     },
     Quiz: {
+        delete: (id, cb) => {
+            SDK.request({
+                    method: "DELETE",
+                    url: "/quiz/" + id
+                },
+                (err, data) => {
+                    if (err) return cb(err);
+
+                    cb(null);
+                })
+        },
         create: (quiz, cb) => {
             SDK.request({
-                method: "POST",
-                url: "/quiz",
-                data: {
-                    courseId: quiz.courseId,
-                    quizTitle: quiz.quizTitle
+                    method: "POST",
+                    url: "/quiz",
+                    data: {
+                        courseId: quiz.courseId,
+                        quizTitle: quiz.quizTitle
+                    },
                 },
-            },
                 (err, data) => {
 
-                if (err) return cb(err);
+                    if (err) return cb(err);
 
-                data = JSON.parse(data);
-                SDK.Storage.persist("courseId", data.courseId);
-                SDK.Storage.persist("quizTitle", data.quizTitle);
-                SDK.Storage.persist("quizId", data.quizId);
+                    data = JSON.parse(data);
+                    SDK.Storage.persist("courseId", data.courseId);
+                    SDK.Storage.persist("quizTitle", data.quizTitle);
+                    SDK.Storage.persist("quizId", data.quizId);
 
-                cb(null, data);
-            });
+                    cb(null, data);
+                });
         },
         findAll: (id, cb) => {
             SDK.request({
-                method: "GET",
-                url: ("/quiz/" + id),
+                    method: "GET",
+                    url: ("/quiz/" + id),
                 },
-                    (err, data) => {
+                (err, data) => {
 
 
                     if (err) return cb(err);
@@ -79,9 +89,10 @@ const SDK = {
 
                     cb(null, data);
 
-            });
-        }
+                });
+        },
     },
+
     Question: {
         create: (question, cb) => {
             SDK.request({

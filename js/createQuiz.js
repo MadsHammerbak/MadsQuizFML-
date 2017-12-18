@@ -193,7 +193,7 @@ $(document).ready(() => {
                           console.log("Bad stuff happened")
                       } else {
 
-                          //window.location.href = "login.html";
+                          window.location.href = "takeQuiz.html";
                       }
                   });
 

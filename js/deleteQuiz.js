@@ -3,7 +3,7 @@ $(document).ready(() => {
     SDK.User.loadNav();
 
 
-   const $quizesTbody = $("#quizes-tbody");
+   const quizesTbody = $("#quizes-tbody");
 
 
     SDK.Courses.getCourses((err, courses) => {
@@ -14,52 +14,57 @@ $(document).ready(() => {
                 $("#course" + course.courseId + "Name").text(course.courseTitel);
 
                 let courseId = course.courseId;
-                $quizesTbody.html("");
+                quizesTbody.html("");
                 SDK.Quiz.findAll(courseId, (err, quiz) => {
 
                     quiz.forEach((quiz) => {
 
-                        $quizesTbody.append(`<tr data-id="${quiz.quizId}"> <td>${quiz.quizId}</td><td>${quiz.quizTitle}</td> 
-                        <td><div class="btn btn-primary-ld" role="group" id="${quiz.quizId}">Slet quiz</div></td>`);
+                        quizesTbody.append(`<tr data-id="${quiz.quizId}"> 
+                        <td>${quiz.quizId}</td>
+                        <td>${quiz.quizTitle}</td> 
+                        <td><button class="delete" data-id="${quiz.quizId}" id='${quiz.quizId}'> Slet quiz </button></td>
+                        </tr>`);
 
 
 
                     });
 
+                $(".delete").on('click',function() {
+
+                    let id = $(this).data("id");
+
+                    SDK.Quiz.delete(id, (err) => {
+
+                        if (err && err.xhr.status === 401) {
+                            $(".form-group").addClass("has-error");
+                        }
+                        else if (err) {
+                            console.log("Bad stuff happened")
+                        } else {
+                            alert("Din bruger er nu slettet")
+                        }
+
+                    });
+                });
+
+
+
+
+                });
+
                 });
             });
         });
     });
-   /* $("#deleteQuiz").click(() => {
-
-        var deletionId = current.userId;
-
-
-        SDK.User.delete(deletionId, (err) => {
-
-            if (err && err.xhr.status === 401) {
-                $(".form-group").addClass("has-error");
-            }
-            else if (err) {
-                console.log("Bad stuff happened")
-            } else {
-                alert("Din bruger er nu slettet")
-                window.location.href = "login.html";
-                SDK.Storage.remove("userId");
-                SDK.Storage.remove("userName");
-                SDK.Storage.remove("userType");
-            }
-
-
-
-        });
-    });*/
 
 
 
 
 
-});
+
+
+
+
 
 
 
