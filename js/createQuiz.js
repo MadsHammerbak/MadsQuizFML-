@@ -2,8 +2,11 @@ $(document).ready(() => {
 
   SDK.User.loadNav();
 
-  let questionId = 1;
+  let questionNr = 1;
   let unsavedIds = [];
+  let questionId=0;
+  let questionId_cached=questionId;
+
   $(".courseGroup").hide();
   $(".hiddenBtn").hide();
 
@@ -73,35 +76,35 @@ $(document).ready(() => {
   });
 
   function addQuestion(courseId){
-     unsavedIds.push(questionId);
+     unsavedIds.push(questionNr);
      $("#addQuestion" + courseId).append("" +
-            "<div class='form-group' id='question" + questionId + "'>" +
+            "<div class='form-group' id='question" + questionNr + "'>" +
             "<input type='text' class='form-control' id='Question' placeholder='Question'>" +
             "<div id='ChoiceBox1'>" +
-                "<input type='text' class='choice' id='Choice1" + questionId + "' placeholder='Choice 1'>" +
-                "<div class='radio-inline'><label><input id='radioYes' class='choiceSelector' type='radio' name='optradio1" + questionId + "'>Yes</label></div>" +
-                "<div class='radio-inline'><label><input id='radioNo' class='choiceSelector' type='radio' name='optradio1" + questionId +"'>No</label></div>" +
+                "<input type='text' class='choice' id='Choice1" + questionNr + "' placeholder='Choice 1'>" +
+                "<div class='radio-inline'><label><input id='radioYes' class='choiceSelector' type='radio' name='optradio1" + questionNr + "'>Yes</label></div>" +
+                "<div class='radio-inline'><label><input id='radioNo' class='choiceSelector' type='radio' name='optradio1" + questionNr +"'>No</label></div>" +
             "</div>" +
             "<br>" +
 
             "<div id='ChoiceBox2'>" +
-                "<input type='text' class='choice' id='Choice2" + questionId + "' placeholder='Choice 2'>" +
-                "<div class='radio-inline'><label><input id='radioYes' class='choiceSelector' type='radio' name='optradio2" + questionId + "'>Yes</label></div>" +
-                "<div class='radio-inline'><label><input id='radioNo' class='choiceSelector' type='radio' name='optradio2" + questionId + "'>No</label></div>" +
+                "<input type='text' class='choice' id='Choice2" + questionNr + "' placeholder='Choice 2'>" +
+                "<div class='radio-inline'><label><input id='radioYes' class='choiceSelector' type='radio' name='optradio2" + questionNr + "'>Yes</label></div>" +
+                "<div class='radio-inline'><label><input id='radioNo' class='choiceSelector' type='radio' name='optradio2" + questionNr + "'>No</label></div>" +
             "</div>" +
             "<br>" +
 
             "<div id='ChoiceBox3'>" +
-                 "<input type='text' class='choice' id='Choice3" + questionId + "' placeholder='Choice 3'>" +
-                 "<div class='radio-inline'><label><input id='radioYes' class='choiceSelector' type='radio' name='optradio3" + questionId + "'>Yes</label></div>" +
-                 "<div class='radio-inline'><label><input id='radioNo' class='choiceSelector' type='radio' name='optradio3" + questionId + "'>No</label></div>" +
+                 "<input type='text' class='choice' id='Choice3" + questionNr + "' placeholder='Choice 3'>" +
+                 "<div class='radio-inline'><label><input id='radioYes' class='choiceSelector' type='radio' name='optradio3" + questionNr + "'>Yes</label></div>" +
+                 "<div class='radio-inline'><label><input id='radioNo' class='choiceSelector' type='radio' name='optradio3" + questionNr + "'>No</label></div>" +
             "</div>" +
             "<br>" +
 
             "<div id='ChoiceBox4'>" +
-                 "<input type='text' class='choice' id='Choice4" + questionId + "' placeholder='Choice 4'>" +
-                 "<div class='radio-inline'><label><input id='radioYes' class='choiceSelector' type='radio' name='optradio4" + questionId + "'>Yes</label></div>" +
-                 "<div class='radio-inline'><label><input id='radioNo' class='choiceSelector' type='radio' name='optradio4" + questionId + "'>No</label></div>" +
+                 "<input type='text' class='choice' id='Choice4" + questionNr + "' placeholder='Choice 4'>" +
+                 "<div class='radio-inline'><label><input id='radioYes' class='choiceSelector' type='radio' name='optradio4" + questionNr + "'>Yes</label></div>" +
+                 "<div class='radio-inline'><label><input id='radioNo' class='choiceSelector' type='radio' name='optradio4" + questionNr + "'>No</label></div>" +
             "</div>" +
             "<br>" +
 
@@ -109,8 +112,8 @@ $(document).ready(() => {
   };
 
   function addQuiz(courseId){
-      addQuestion(courseId, questionId);
-      questionId++;
+      addQuestion(courseId, questionNr);
+      questionNr++;
   }
 
   function createQuiz(btn){
@@ -157,15 +160,15 @@ $(document).ready(() => {
                   else if (err){
                       console.log("Bad stuff happened")
                   } else {
-                      //window.location.href = "login.html";
+
                   }
               });
 
-              //Get question Id
-              let questionId = SDK.Storage.load("questionId");
-
               let choices = $("#question" + e).find($(".choice"));
 
+              questionId = SDK.Storage.load("questionId");
+              //doStuff();
+              console.log(questionId);
 
               $.each(choices, function(index, choice) {
 
@@ -174,7 +177,6 @@ $(document).ready(() => {
 
                   let answerNo = $(this).siblings().find("#radioNo").is(":checked");
 
-                  console.log($(this).siblings().find("#radioNo"));
                   if (answerYes) {
                       answer = 1;
                   } else if (answerNo) {
@@ -182,9 +184,7 @@ $(document).ready(() => {
                   }
                   let choiceDb = {choiceTitle: $(this).val(), questionId: questionId, answer: answer};
 
-
-
-                  //Save Choices
+                  //Saves Choices
                   SDK.Choice.create(choiceDb, (err, choiceDb) => {
                       if (err && err.xhr.status === 401) {
                           $(".form-group").addClass("has-error");
@@ -193,7 +193,7 @@ $(document).ready(() => {
                           console.log("Bad stuff happened")
                       } else {
 
-                          window.location.href = "takeQuiz.html";
+                         //window.location.href = "chooseQuiz.html";
                       }
                   });
 
@@ -207,6 +207,14 @@ $(document).ready(() => {
       SDK.Storage.remove("quizTitle");
       SDK.Storage.remove("courseId");
 
+  }
+
+  function doStuff(){
+      while(questionId === questionId_cached){
+          setTimeout(doStuff, 1000);
+          return;
+      }
+      questionId = questionId_cached;
   }
 
 });

@@ -9,10 +9,12 @@ const SDK = {
             });
         }
 
+
         $.ajax({
             url: SDK.serverURL + options.url,
             method: options.method,
             headers: headers,
+            async: options.async,
             contentType: "application/json",
             dataType: "json",
             data: JSON.stringify(options.data),
@@ -30,7 +32,7 @@ const SDK = {
         getCourses: (cb) => {
             SDK.request({
                 method: "GET",
-                url: "/courses"
+                url: "/courses",
             }, (err, data) => {
 
                 if (err) return cb(err);
@@ -102,6 +104,8 @@ const SDK = {
                         quizId: question.quizId,
                         questionTitle: question.questionTitle
                     },
+                    async: false,
+
                 },
                 (err, data) => {
 
@@ -113,6 +117,23 @@ const SDK = {
                     cb(null, data);
                 });
         },
+        findAll: (id, cb) => {
+            SDK.request({
+                    method: "GET",
+                    url: ("/question/" + id),
+                },
+                (err, data) => {
+
+                    if (err) return cb(err);
+
+                    data = JSON.parse(data);
+
+                    cb(null, data);
+
+                });
+        },
+
+
 
     },
     Choice: {
@@ -121,10 +142,12 @@ const SDK = {
                     method: "POST",
                     url: "/choice",
                     data: {
-                        questionId: choice.questionId ,
+                        questionId: choice.questionId,
                         choiceTitle: choice.choiceTitle,
                         answer: choice.answer
                     },
+                    async: false,
+
                 },
                 (err, data) => {
 
@@ -135,6 +158,7 @@ const SDK = {
                     cb(null, data);
                 });
         },
+
 
     },
 
@@ -203,7 +227,8 @@ const SDK = {
                username: SDK.Storage.load("username"),
                type: SDK.Storage.load("userType")
 
-        }},
+        }
+        },
 
         delete: (id, cb) =>{
             SDK.request({
