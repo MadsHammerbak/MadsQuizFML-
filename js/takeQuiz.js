@@ -14,34 +14,35 @@ $(document).ready(() => {
     //SDK request for loading all questions
     SDK.Question.findAll(chosenId, (err, question) => {
 
+
+
         //For each loop for adding all the questions to the table
         question.forEach((question) => {
-            var question = question.questionTitle;
+            var questionTitle = question.questionTitle;
+
             var questionId = question.questionId;
-            $(".table").append(`<div id="${questionId}"><p><b>${question}</b></p></div>`)
-            console.log(question)
+            console.log(questionTitle);
+            console.log(questionId);
+            $(".table").append(`<div id="${questionId}"><p><b>${questionTitle}</b></p></div>`);
+
+
+
 
             //SDK request for loading all the options
-            /*SDK.Choice.findAll(questionId, (err, choice) =>{
+            SDK.Choice.findAll(questionId, (err, choice) =>{
 
-                choice = choice.choiceTitle;
-                console.log(choice);
-
-
-               /* var choice  = choice.choiceTitle;
-                var choiceId = choice.id;
-                var answer = choice.answer;
+                var choice = choice;
 
                 //For each loop for adding options to the specific question (with radio buttons)
-                choice.forEach((choices) => {
-                    $(`#${questionId}`).append(`<p><input type="radio" class="choice-answer" name="option${questionId}" value="${choices.answer}"> ${choices.choiceTitle} </p>`);
+                choice.forEach((choice) => {
+                    $(`#${questionId}`).append(`<p><input type="radio" class="choice-answer" name="option${questionId}" value="${choice.answer}"> ${choice.choiceTitle} </p>`);
 
                 });
-            });*/
+            });
         });
     });
-    /*
-    $("#getAnswers").on("click", () => {
+
+    $("#checkAnswers").on("click", () => {
 
         let totalQuestions = 0;
         let correctAnswers = 0;
@@ -54,10 +55,9 @@ $(document).ready(() => {
                 //Function to count number of correct answers
                 if ($(this).val() == 1) {
                     correctAnswers++;
-
                 }
             }
-            console.log(correctAnswers);
-        })*/
-
+        });
+        window.alert("Du har " + correctAnswers + " ud af " + totalQuestions);
+    });
 });

@@ -193,7 +193,7 @@ $(document).ready(() => {
                           console.log("Bad stuff happened")
                       } else {
 
-                         //window.location.href = "chooseQuiz.html";
+                         window.location.href = "chooseQuiz.html";
                       }
                   });
 

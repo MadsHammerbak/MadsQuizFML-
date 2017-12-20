@@ -86,7 +86,6 @@ const SDK = {
 
 
                     if (err) return cb(err);
-
                     data = JSON.parse(data);
 
                     cb(null, data);
@@ -121,7 +120,9 @@ const SDK = {
             SDK.request({
                     method: "GET",
                     url: ("/question/" + id),
+
                 },
+
                 (err, data) => {
 
                     if (err) return cb(err);
@@ -146,7 +147,7 @@ const SDK = {
                         choiceTitle: choice.choiceTitle,
                         answer: choice.answer
                     },
-                    async: false,
+
 
                 },
                 (err, data) => {
@@ -156,6 +157,22 @@ const SDK = {
 
 
                     cb(null, data);
+                });
+        },
+
+        findAll: (id, cb) => {
+            SDK.request({
+                    method: "GET",
+                    url: ("/choice/" + id),
+                },
+                (err, data) => {
+
+                    if (err) return cb(err);
+
+                    data = JSON.parse(data);
+
+                    cb(null, data);
+
                 });
         },
 

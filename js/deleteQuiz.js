@@ -41,7 +41,7 @@ $(document).ready(() => {
                         else if (err) {
                             console.log("Bad stuff happened")
                         } else {
-                            alert("Din bruger er nu slettet")
+                            //alert("Din bruger er nu slettet")
                         }
 
                     });
