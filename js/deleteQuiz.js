@@ -6,6 +6,7 @@ $(document).ready(() => {
    const quizesTbody = $("#quizes-tbody");
 
 
+
     SDK.Courses.getCourses((err, courses) => {
         courses.forEach(function (course) {
             $("#courseDiv").append("<div class='col-md-3' id=" + course.courseId + "></div>");
@@ -41,7 +42,7 @@ $(document).ready(() => {
                         else if (err) {
                             console.log("Bad stuff happened")
                         } else {
-                            //alert("Din bruger er nu slettet")
+                            alert("Quizzen er nu slettet")
                         }
 
                     });

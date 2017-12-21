@@ -2,18 +2,9 @@ const SDK = {
     serverURL: "http://localhost:8080/api",
     request: (options, cb) => {
 
-        let headers = {};
-        if (options.headers) {
-            Object.keys(options.headers).forEach((h) => {
-                headers[h] = (typeof options.headers[h] === 'object') ? JSON.stringify(options.headers[h]) : options.headers[h];
-            });
-        }
-
-
         $.ajax({
             url: SDK.serverURL + options.url,
             method: options.method,
-            headers: headers,
             async: options.async,
             contentType: "application/json",
             dataType: "json",
@@ -264,9 +255,13 @@ const SDK = {
 
         },
         logOut: () => {
-            SDK.Storage.remove("userId");
+            SDK.Storage.remove("userId");A
             SDK.Storage.remove("username");
             SDK.Storage.remove("userType");
+            SDK.Storage.remove("questionId");
+            SDK.Storage.remove("courseId");
+            SDK.Storage.remove("quizId");
+            SDK.Storage.remove("quizTitle");
             window.location.href = "index.html";
         },
         login: (username, password, cb) => {
@@ -352,9 +347,39 @@ const SDK = {
             }
             document.location.replace("login.html");
         }
+        },
 
-},
+    restrictAccessAdmin: () => {
+        let user = SDK.Storage.load("userType");
+        console.log(user)
 
+        if (user == 1 ) {
+            try {
+                //stop most browsers loading
+                window.stop();
+            }
+            catch (e) {
+                //IE stop loading content
+                document.execCommand('Stop');
+            }
+            document.location.replace("adminUser.html");
+        }
+    },
+
+
+    decryptEncrypt: (decryptEncrypt) => {
+        if (decryptEncrypt !== undefined && decryptEncrypt.length !== 0) {
+            //Encrypt key
+            const key = ['K', 'O', 'C', 'H'];
+            let isDecryptedEncrypted = "";
+            for (let i = 0; i < decryptEncrypt.length; i++) {
+                isDecryptedEncrypted += (String.fromCharCode((decryptEncrypt.charAt(i)).charCodeAt(0) ^ (key[i % key.length]).charCodeAt(0)))
+            }
+            return isDecryptedEncrypted;
+        } else {
+            return decryptEncrypt;
+        }
+    },
 
 
 };

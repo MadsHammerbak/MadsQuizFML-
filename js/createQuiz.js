@@ -10,6 +10,8 @@ $(document).ready(() => {
   $(".courseGroup").hide();
   $(".hiddenBtn").hide();
 
+
+
   SDK.Courses.getCourses((err, courses) => {
       courses.forEach(function (course) {
           $("#courseDiv").append("<div class='col-md-3' id=" + course.courseId + "></div>");
@@ -167,8 +169,6 @@ $(document).ready(() => {
               let choices = $("#question" + e).find($(".choice"));
 
               questionId = SDK.Storage.load("questionId");
-              //doStuff();
-              console.log(questionId);
 
               $.each(choices, function(index, choice) {
 
@@ -209,13 +209,7 @@ $(document).ready(() => {
 
   }
 
-  function doStuff(){
-      while(questionId === questionId_cached){
-          setTimeout(doStuff, 1000);
-          return;
-      }
-      questionId = questionId_cached;
-  }
+
 
 });
 
